@@ -1,41 +1,72 @@
-
-
-
- var col = [];
-function onLoad() {
-
-  var qu =document.getElementById("quantity").value;
-  var option=document.getElementById("option").value;
-  console.log(option)
+var col =[];
+  var list="";
   var text="";
-  var amt="";
-  var total='';
-  var price='';
-  var value = JSON.parse(localStorage.getItem('user1'));
-    for(var i=0;i<value.length;i++){
-    	console.log(value[i])  
-        document.getElementById("option").innerHTML+='<option>'+value[i].item+'</option>';
-       }  
+     var request=$.ajax({
+  type:"GET",
+  url:"https://5d36889b86300e0014b643bb.mockapi.io/api/v1/AjaxBilling", 
+    datatype:"json",
 
-      for (var j=0;j<value.length;j++){
-           if(option == value[j].item){
-           	  price=value[j].price;
-           	  amt = qu*value[j].price;
-           	  col.push(amt);
-           }
-    	}
+    success:function(result)
+    {
+      list=result;      
+      for (var i=0;i<list.length;i++)
+      {    
 
-    	for(var j=0;j<col.length;j++){
-    		var p = col[j];
-    		 total = eval(total+p)
-    	}
-    	  var data  ={
-      	name:option,
-      	amt:amt,
-      	price:price
+        
+        text+= "<option>"+list[i].item+"</option>"
+           
+        
+
       }
-         document.getElementById("total").value= total
+        
+        $("select").html(text)
 
-     document.getElementById("body1").innerHTML+='<tr><td>'+data.name+'</td>'+'<td>'+data.price+'</td>'+'<td>'+data.amt+'</td></tr>';
+}
 
-    }
+});
+        $("#button").click(function(){
+        var text="";
+      var amt="";
+      var total="";
+      var option =$("#option").val();
+      var price=$("#price").val();
+      var quan=$("#quantity").val();
+        
+
+        for(var j=0;j<list.length;j++){
+
+        if(option== list[j].item){
+          price=list[j].price;
+          amt=quan*price;
+          col.push(amt);
+          console.log(amt)
+        }
+      }
+         
+
+        for (var k=0;k<col.length;k++){
+          var p=col[k];
+          total=eval(total+p)
+        
+        }
+
+        var data={
+          option:option,
+          amt:amt,
+          price:price,
+        }
+
+      
+    $("#body1").append("<tr><td>"+data.option+"</td>"+"<td>"+data.price+"</td>"+"<td>"+data.amt+"</td></tr>");
+
+      
+
+});
+   
+$('#button2').click(function(){
+  location.replace('home.html');
+});
+
+$('#button1').click(function(){
+  location.replace('index.html');
+}); 

@@ -1,29 +1,21 @@
-var user=[];
-function admin(){
-var item=document.getElementById('item').value;
-var price=document.getElementById('price').value;
-console.log(item,price);
+var list ="";
+    $("#button").click(function(){
+    	var item=$("#item").val();
 
-if(item==''){
-	alert('Enter a Item')
-}
-else if(price==''){
-	alert('Enter a price')
-}
-else
-{
-	var data={
-		item:item,
-		price:price
-	}
+	   var price=$("#price").val();
+       
+    	var billing1={
+    		item:item,
+    		price:price
+    	}
+    	console.log(billing1)
+      list += 1;
+      $.post("https://5d36889b86300e0014b643bb.mockapi.io/api/v1/AjaxBilling",billing1);
+      alert('Added')
 
-	console.log(data);
-	user.push(data);
-	console.log(user);
-	localStorage.setItem('user1',JSON.stringify(user));
-	location.replace('home.html');
-}
-}
+
+    });
+
 
 function home(){
 	location.replace('home.html')
